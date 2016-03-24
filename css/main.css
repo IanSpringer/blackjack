@@ -1,0 +1,189 @@
+body {
+  background: black;
+}
+
+.jumbotron {
+  text-align: center;
+  font-family: 'Poiret One', cursive;
+  font-size: 120px;
+  color: red;
+}
+
+.rulesButton {
+  text-align: center;
+  display: inline-block;
+  font-size: 50px;
+  margin-left: 50px;
+  font-family: 'Poiret One', cursive;
+  border-radius: 5px;
+  cursor: pointer;
+  background: black;
+  color: #006400;
+}
+.clickers {
+  text-align: center;
+  width: 400px;
+  height: 300px;
+  margin: auto;
+}
+.startButton {
+  text-align: center;
+  display: inline-block;
+  font-size: 50px;
+  font-family: 'Poiret One', cursive;
+  margin-right: 50px;
+  float: left;
+
+  border-radius: 5px;
+  cursor: pointer;
+  background: black;
+  color: #006400;
+
+}
+
+.dealerCard1 {
+  width: 130px;
+  height: 200px;
+  font-size: 40px;
+  color: black;
+  text-align: center;
+  background: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-top: 90px;
+  margin-left: 20px;
+  display: inline-block;
+  float: left;
+}
+
+.dealerCard2 {
+  width: 130px;
+  height: 200px;
+  font-size: 40px;
+  color: black;
+  text-align: center;
+  background: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-left: 20px;
+  margin-top: 90px;
+  display: inline-block;
+  float: left;
+}
+
+.playerCard1 {
+  width: 130px;
+  height: 200px;
+  font-size: 40px;
+  color: black;
+  text-align: center;
+  background: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-right: 20px;
+  margin-top: 90px;
+  display: inline-block;
+  float: right;
+}
+
+.playerCard2 {
+
+  width: 130px;
+  height: 200px;
+  font-size: 40px;
+  color: black;
+  text-align: center;
+  background: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-right: 20px;
+  margin-top: 90px;
+  display: inline-block;
+  float: right;
+
+}
+.div2 {
+  height: 100px;
+}
+
+.div4 {
+  height: 100px;
+}
+
+.dealer {
+  font-family: 'Poiret One', cursive;
+  font-size: 40px;
+  color: red;
+  margin-top: 10px;
+  margin-left: 50px;
+  display: inline-block;
+  float: left;
+}
+
+.player {
+  font-family: 'Poiret One', cursive;
+  font-size: 40px;
+  color: red;
+  margin-top: 10px;
+  float: right;
+  margin-right: 50px;
+  display: inline-block;
+}
+
+.div5 {
+  height: 100px;
+  width: 300px;
+  margin: auto;
+}
+
+.deal {
+  color: white;
+  float: left;
+  font-family: 'Poiret One', cursive;
+  font-size: 40px;
+  width: 90px;
+  text-align: center;
+  border: 1px solid green;
+  border-radius: 10px;
+  cursor: pointer;
+  background: green;
+}
+
+.hit {
+  color: white;
+  width: 60px;
+  font-family: 'Poiret One', cursive;
+  font-size: 40px;
+  text-align: center;
+  border: 1px solid red;
+  border-radius: 10px;
+  cursor: pointer;
+  background: red;
+  float: right;
+
+}
+
+
+
+.playerCard3 {
+  width: 130px;
+  font-family: 'Poiret One', cursive;;
+  height: 200px;
+  font-size: 40px;
+  color: black;
+  text-align: center;
+  background: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-right: 20px;
+  margin-top: 90px;
+  display: inline-block;
+  float: right;
+}
+}
+
+
+
+
+
+
