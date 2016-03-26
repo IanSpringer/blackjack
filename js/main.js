@@ -1,3 +1,5 @@
+
+
 // Card Constructor
 var Card = function(suit, rank, value, symbol) {
     this.suit = suit;
@@ -38,14 +40,10 @@ $('#startButton').on('click', function(){
   $('#startButton').html("");
   $('#rulesButton').html("");
   $('#jumbotron').html("");
-  $('#jumbotron').append('<div class="dealerCard1" id="dealerCard1"></div>');
-  $('#jumbotron').append('<div class="dealerCard2" id="dealerCard2"></div>');
-  $('#jumbotron').append('<div class="playerCard1" id="playerCard1"></div>');
-  $('#jumbotron').append('<div class="playerCard2" id="playerCard2"></div>');
-  $('#div4').append('<h2 class="dealer" id="dealer"></h2>');
-  $('#dealer').html('DEALER');
-  $('#div4').append('<h2 class="player" id="player"></h2>');
-  $('#player').html('PLAYER');
+  //$('#jumbotron').append('<div class="dealerCard1" id="dealerCard1"></div>');
+  //$('#jumbotron').append('<div class="dealerCard2" id="dealerCard2"></div>');
+  //$('#jumbotron').append('<div class="playerCard1" id="playerCard1"></div>');
+  //$('#jumbotron').append('<div class="playerCard2" id="playerCard2"></div>');
   $('#div5').append('<div class="deal" id="deal" onclick="deal()"></div>');
   $('#deal').html('Deal');
 });
@@ -54,21 +52,34 @@ $('#startButton').on('click', function(){
 
 var cashMoney = 3000;
 
+var playerTotal;
+var dealerTotal;
 
-
+var noDeal = false;
 
 // card ingredients
 
 //Creates a fresh deck in order
 
 var deal = function(){
+  var noDeal = 0;
+  if (noDeal === 0) {
   playerHand.push(deck[0]);
   dealerHand.push(deck[1]);
   playerHand.push(deck[2]);
   dealerHand.push(deck[3]);
+  $('#div4').append('<h2 class="animated fadeInUpBig" id="dealer"></h2>');
+  $('#dealer').html('DEALER');
+  $('#div4').append('<h2 class="animated fadeInUpBig" id="player"></h2>');
+  $('#player').html('PLAYER');
+  $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard1"></div>');
+  $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard2"></div>');
+  $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard1"></div>');
+  $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard2"></div>');
   $('#playerCard1').html(playerHand[0].rank + playerHand[0].symbol);
   $('#playerCard2').html(playerHand[1].rank + playerHand[1].symbol);
-  $('#dealerCard1').html(dealerHand[0].rank + dealerHand[0].symbol);
+  $('#dealerCard1').append('<img src="http://opengameart.org/sites/default/files/card%20back%20red.png"/>');
+  //$('#dealerCard1').html(dealerHand[0].rank + dealerHand[0].symbol);
   $('#dealerCard2').html(dealerHand[1].rank + dealerHand[1].symbol);
   $('#div5').append('<div class="hit" id="hit" onclick="hit()"></div>');
   $('#hit').html('Hit');
@@ -76,10 +87,12 @@ var deal = function(){
   deck.shift();
   deck.shift();
   deck.shift();
-  checkValue(playerHand);
-  checkValue(dealerHand);
-  checkTotal();
+  checkPlayerValue();
+  checkPlayerTotal();
+}
+noDeal = 1;
 };
+
 
 
 var hit = function(){
@@ -87,8 +100,10 @@ var hit = function(){
   $('#jumbotron').append('<div class="playerCard3" id="playerCard3"></div>');
   $('#playerCard3').html(deck[0].rank + deck[0].symbol);
   playerHand.push(deck[0]);
-  checkValue(playerHand);
-  checkTotal();
+  checkPlayerValue();
+  return playerTotal;
+  checkPlayerTotal();
+
 };
 
 
@@ -97,26 +112,31 @@ var playerHand = [];
 var dealerHand = [];
 
 var playerTotal;
+var dealerTotal;
 
-var checkValue = function(player) {
-  if (player.length === 2) {
-     playerTotal = player[0].value + player[1].value;
+var checkPlayerValue = function() {
+  if (playerHand.length === 2) {
+     playerTotal = playerHand[0].value + playerHand[1].value;
      return playerTotal;
 } else if (playerHand.length === 3) {
-    playerTotal = player[0].value + player[1].value + player[2].value;
+    playerTotal = playerHand[0].value + playerHand[1].value + playerHand[2].value;
     return playerTotal;
 }
 };
 
-playerTotal;
+//checkPlayerTotal();
+//playerTotal;
 
-var checkTotal = function(){
+var checkPlayerTotal = function(){
   if(playerTotal > 21) {
+    console.log("bust");
     alert('Bust');
-  }else if (playerTotal === 21) {
-    alert('BlackJack!');
-  }else {
     return playerTotal;
+  }else if (playerTotal === 21) {
+    console.log("blackjack")
+    alert('BlackJack!');
+    return playerTotal;
+  }else {playerTotal;
   }
 };
 var getDealerValue = function() {

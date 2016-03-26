@@ -2,14 +2,14 @@ body {
   background: black;
 }
 
-.jumbotron {
+#jumbotron {
   text-align: center;
   font-family: 'Poiret One', cursive;
   font-size: 120px;
   color: red;
 }
 
-.rulesButton {
+#rulesButton {
   text-align: center;
   display: inline-block;
   font-size: 50px;
@@ -20,13 +20,17 @@ body {
   background: black;
   color: #006400;
 }
+
+#rulesButton:hover {
+  color: red;
+}
 .clickers {
   text-align: center;
   width: 400px;
   height: 300px;
   margin: auto;
 }
-.startButton {
+#startButton {
   text-align: center;
   display: inline-block;
   font-size: 50px;
@@ -40,23 +44,32 @@ body {
   color: #006400;
 
 }
+#startButton:hover {
+  color: red;
 
-.dealerCard1 {
-  width: 130px;
-  height: 200px;
+}
+#dealerCard1 {
+  width: 142px;
+  height: 219px;
   font-size: 40px;
-  color: black;
   text-align: center;
-  background: white;
+  background-image: url ('http://opengameart.org/sites/default/files/card%20back%20red.png');
   border: 1px solid black;
-  border-radius: 15px;
+
   margin-top: 90px;
   margin-left: 20px;
   display: inline-block;
   float: left;
 }
 
-.dealerCard2 {
+#dealerCard1 img {
+  max-height: 100%;
+  max-width: 100%
+
+
+}
+
+#dealerCard2 {
   width: 130px;
   height: 200px;
   font-size: 40px;
@@ -64,14 +77,14 @@ body {
   text-align: center;
   background: white;
   border: 1px solid black;
-  border-radius: 15px;
+
   margin-left: 20px;
   margin-top: 90px;
   display: inline-block;
   float: left;
 }
 
-.playerCard1 {
+#playerCard1 {
   width: 130px;
   height: 200px;
   font-size: 40px;
@@ -79,14 +92,14 @@ body {
   text-align: center;
   background: white;
   border: 1px solid black;
-  border-radius: 15px;
+
   margin-right: 20px;
   margin-top: 90px;
   display: inline-block;
   float: right;
 }
 
-.playerCard2 {
+#playerCard2 {
 
   width: 130px;
   height: 200px;
@@ -95,7 +108,7 @@ body {
   text-align: center;
   background: white;
   border: 1px solid black;
-  border-radius: 15px;
+
   margin-right: 20px;
   margin-top: 90px;
   display: inline-block;
@@ -110,17 +123,18 @@ body {
   height: 100px;
 }
 
-.dealer {
+#dealer {
   font-family: 'Poiret One', cursive;
   font-size: 40px;
   color: red;
-  margin-top: 10px;
-  margin-left: 50px;
+  height: 50px;
+  display: fixed;
+  width: auto;
   display: inline-block;
   float: left;
 }
 
-.player {
+#player {
   font-family: 'Poiret One', cursive;
   font-size: 40px;
   color: red;
@@ -174,13 +188,27 @@ body {
   text-align: center;
   background: white;
   border: 1px solid black;
-  border-radius: 15px;
+
   margin-right: 20px;
   margin-top: 90px;
   display: inline-block;
   float: right;
 }
-}
+.dealerCard3 {
+  width: 130px;
+  font-family: 'Poiret One', cursive;;
+  height: 200px;
+  font-size: 40px;
+  color: black;
+  text-align: center;
+  background: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-right: 20px;
+  margin-top: 90px;
+  display: inline-block;
+  float: left;
+  }}
 
 
 
