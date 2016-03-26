@@ -35,8 +35,15 @@ var shuffleDeck = function(array) {
 $('#rulesButton').on('click', function() {
   console.log("button works");
 });
+var bank = 5000;
+
+
+var getBet = function(){
+  var amount = window.prompt('Your bank total is $' + bank + '. How much would you like to wager?');
+};
 
 $('#startButton').on('click', function(){
+  getBet();
   $('#startButton').html("");
   $('#rulesButton').html("");
   $('#jumbotron').html("");
@@ -46,11 +53,12 @@ $('#startButton').on('click', function(){
   //$('#jumbotron').append('<div class="playerCard2" id="playerCard2"></div>');
   $('#div5').append('<div class="deal" id="deal" onclick="deal()"></div>');
   $('#deal').html('Deal');
-});
+
   makeDeck();
   shuffleDeck(deck);
+});
 
-var cashMoney = 3000;
+
 
 var playerTotal;
 var dealerTotal;
@@ -62,15 +70,15 @@ var noDeal = false;
 //Creates a fresh deck in order
 
 var deal = function(){
-  var noDeal = 0;
-  if (noDeal === 0) {
+  $('#div6').append('<p class="animated fadeInUp" id="bankAmount"></p>');
+  $('#bankAmount').html("Bank total: $" + bank);
   playerHand.push(deck[0]);
   dealerHand.push(deck[1]);
   playerHand.push(deck[2]);
   dealerHand.push(deck[3]);
-  $('#div4').append('<h2 class="animated fadeInUpBig" id="dealer"></h2>');
+  $('#div4').append('<h2 class="animated fadeInUp" id="dealer"></h2>');
   $('#dealer').html('DEALER');
-  $('#div4').append('<h2 class="animated fadeInUpBig" id="player"></h2>');
+  $('#div4').append('<h2 class="animated fadeInUp" id="player"></h2>');
   $('#player').html('PLAYER');
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard1"></div>');
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard2"></div>');
@@ -89,20 +97,22 @@ var deal = function(){
   deck.shift();
   checkPlayerValue();
   checkPlayerTotal();
-}
-noDeal = 1;
+
 };
 
 
 
 var hit = function(){
   console.log('button works');
-  $('#jumbotron').append('<div class="playerCard3" id="playerCard3"></div>');
+  $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard3"></div>');
   $('#playerCard3').html(deck[0].rank + deck[0].symbol);
   playerHand.push(deck[0]);
   checkPlayerValue();
   return playerTotal;
   checkPlayerTotal();
+  deck.shift();
+  return deck;
+
 
 };
 
@@ -117,15 +127,19 @@ var dealerTotal;
 var checkPlayerValue = function() {
   if (playerHand.length === 2) {
      playerTotal = playerHand[0].value + playerHand[1].value;
-     return playerTotal;
+
 } else if (playerHand.length === 3) {
     playerTotal = playerHand[0].value + playerHand[1].value + playerHand[2].value;
-    return playerTotal;
+
+} else if (playerHand.length == 4) {
+  playerTotal = playerHand[0].value + playerHand[1].value + playerHand[2].value + playerHand[3].value;
+
 }
+return playerTotal
 };
 
-//checkPlayerTotal();
-//playerTotal;
+
+playerTotal;
 
 var checkPlayerTotal = function(){
   if(playerTotal > 21) {
@@ -133,7 +147,7 @@ var checkPlayerTotal = function(){
     alert('Bust');
     return playerTotal;
   }else if (playerTotal === 21) {
-    console.log("blackjack")
+    console.log("blackjack");
     alert('BlackJack!');
     return playerTotal;
   }else {playerTotal;

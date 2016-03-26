@@ -49,8 +49,8 @@ body {
 
 }
 #dealerCard1 {
-  width: 142px;
-  height: 219px;
+  width: 140px;
+  height: 218px;
   font-size: 40px;
   text-align: center;
   background-image: url ('http://opengameart.org/sites/default/files/card%20back%20red.png');
@@ -179,7 +179,7 @@ body {
 
 
 
-.playerCard3 {
+#playerCard3 {
   width: 130px;
   font-family: 'Poiret One', cursive;;
   height: 200px;
@@ -194,9 +194,9 @@ body {
   display: inline-block;
   float: right;
 }
-.dealerCard3 {
+#dealerCard3 {
   width: 130px;
-  font-family: 'Poiret One', cursive;;
+  font-family: 'Poiret One', cursive;
   height: 200px;
   font-size: 40px;
   color: black;
@@ -208,7 +208,23 @@ body {
   margin-top: 90px;
   display: inline-block;
   float: left;
-  }}
+  }
+.div6 {
+  width: 300px;
+  margin: auto;
+}
+#bankAmount {
+  font-family: 'Poiret One', cursive;
+  font-size: 28;
+  color: white;
+
+
+}
+
+
+
+
+
 
 
 
