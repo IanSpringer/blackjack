@@ -37,20 +37,18 @@ $('#rulesButton').on('click', function() {
 });
 var bank = 5000;
 
-
+var playerPlaying = false;
 var getBet = function(){
-  var amount = window.prompt('Your bank total is $' + bank + '. How much would you like to wager?');
+  var amount = window.prompt('Your bank total is $' + bank + '. Minimum bet is $200. How much would you like to wager?');
+  return amount;
 };
 
 $('#startButton').on('click', function(){
-  getBet();
+  var bet1 = getBet();
+  playerPlaying = true;
   $('#startButton').html("");
   $('#rulesButton').html("");
   $('#jumbotron').html("");
-  //$('#jumbotron').append('<div class="dealerCard1" id="dealerCard1"></div>');
-  //$('#jumbotron').append('<div class="dealerCard2" id="dealerCard2"></div>');
-  //$('#jumbotron').append('<div class="playerCard1" id="playerCard1"></div>');
-  //$('#jumbotron').append('<div class="playerCard2" id="playerCard2"></div>');
   $('#div5').append('<div class="deal" id="deal" onclick="deal()"></div>');
   $('#deal').html('Deal');
 
@@ -64,6 +62,9 @@ var playerTotal;
 var dealerTotal;
 
 var noDeal = false;
+
+
+
 
 // card ingredients
 
@@ -89,7 +90,11 @@ var deal = function(){
   $('#dealerCard1').append('<img src="http://opengameart.org/sites/default/files/card%20back%20red.png"/>');
   //$('#dealerCard1').html(dealerHand[0].rank + dealerHand[0].symbol);
   $('#dealerCard2').html(dealerHand[1].rank + dealerHand[1].symbol);
-  $('#div5').append('<div class="hit" id="hit" onclick="hit()"></div>');
+  $('#div5').append('<div class="animated fadeInUp" id="bet" onclick="bet()"></div>');
+  $('#div5').append('<div class="animated fadeInUp" id="hit" onclick="hit()"></div>');
+  $('#div5').append('<div class="animated fadeInUp" id="hold" onclick="hold()"></div>');
+  $('#hold').html('Hold');
+  $('#bet').html('Bet');
   $('#hit').html('Hit');
   deck.shift();
   deck.shift();
@@ -97,26 +102,199 @@ var deal = function(){
   deck.shift();
   checkPlayerValue();
   checkPlayerTotal();
+  checkDealerValue();
+  if (playerHand[0].suit === "Hearts"){
+    document.getElementById("playerCard1").style.color="red";
+  }
+  if(playerHand[0].suit === "Clubs") {
+    document.getElementById("playerCard1").style.color="black";
+  }
+  if(playerHand[0].suit === "Spades") {
+    document.getElementById("playerCard1").style.color="black";
+  }
 
-};
+  if(playerHand[0].suit === "Diamonds"){
+    document.getElementById("playerCard1").style.color="red";
+  };
+  if (playerHand[1].suit === "Hearts"){
+    document.getElementById("playerCard2").style.color="red";
+  };
+  if(playerHand[1].suit === "Clubs") {
+    document.getElementById("playerCard2").style.color="black";
+  }
+  if(playerHand[1].suit === "Spades") {
+    document.getElementById("playerCard2").style.color="black"
+  }
 
+  if(playerHand[1].suit === "Diamonds"){
+    document.getElementById("playerCard2").style.color="red";
+ }
+ if (dealerHand[0].suit === "Hearts"){
+    document.getElementById("dealerCard1").style.color="red";
+  };
+  if(dealerHand[0].suit === "Clubs") {
+    document.getElementById("dealerCard1").style.color="black"
+  }
+  if(dealerHand[0].suit === "Spades") {
+    document.getElementById("dealerCard1").style.color="black"
+  }
 
+  if(dealerHand[0].suit === "Diamonds"){
+    document.getElementById("dealerCard1").style.color="red";
+}
+if (dealerHand[1].suit === "Hearts"){
+    document.getElementById("dealerCard2").style.color="red";
+  };
+  if(dealerHand[1].suit === "Clubs") {
+    document.getElementById("dealerCard2").style.color="black"
+  }
+  if(dealerHand[1].suit === "Spades") {
+    document.getElementById("dealerCard2").style.color="black"
+  }
+
+  if(dealerHand[1].suit === "Diamonds"){
+    document.getElementById("dealerCard2").style.color="red";
+  };
+
+  $('#div1').html("");
+}
+var bet = function() {
+  var amount = window.prompt('How much would you like to wager?');
+  return amount
+}
 
 var hit = function(){
   console.log('button works');
+  if(playerHand.length === 2) {
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard3"></div>');
   $('#playerCard3').html(deck[0].rank + deck[0].symbol);
   playerHand.push(deck[0]);
+    if (playerHand[2].suit === "Hearts"){
+    document.getElementById("playerCard3").style.color="red";
+    };
+    if(playerHand[2].suit === "Clubs") {
+    document.getElementById("playerCard3").style.color="black";
+    }
+    if(playerHand[2].suit === "Spades") {
+    document.getElementById("playerCard3").style.color="black";
+    }
+    if(playerHand[2].suit === "Diamonds"){
+    document.getElementById("playerCard3").style.color="red";
+    };
   checkPlayerValue();
-  return playerTotal;
   checkPlayerTotal();
   deck.shift();
   return deck;
+  return playerTotal;
+
+}else if (playerHand.length === 3) {
+  $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard4"></div>');
+  $('#playerCard4').html(deck[0].rank + deck[0].symbol);
+  playerHand.push(deck[0]);
+  if (playerHand[3].suit === "Hearts"){
+    document.getElementById("playerCard3").style.color="red";
+  };
+  if(playerHand[3].suit === "Clubs") {
+    document.getElementById("playerCard3").style.color="black"
+  }
+  if(playerHand[3].suit === "Spades") {
+    document.getElementById("playerCard3").style.color="black"
+  }
+
+  if(playerHand[3].suit === "Diamonds"){
+    document.getElementById("playerCard3").style.color="red";
+  };
+  checkPlayerValue();
+  checkPlayerTotal();
+  deck.shift();
+  return deck;
+}
+};
+
+deck;
+
+var dealerHit = function(){
+  console.log('working')
+   $('#dealerCard1').attr('id', 'flipCard');
+   $('#flipCard').html(dealerHand[0].rank + dealerHand[0].symbol);
+   checkDealerValue();
+   checkDealerTotal();
+   checkPlayerTotal();
+
+  if(dealerTotal < playerTotal) {
+    dealerHand.push(deck[0]);
+    $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard3"></div>');
+    $('#dealerCard3').html(dealerHand[2].rank + dealerHand[2].symbol);
+    if (dealerHand[2].suit === "Hearts"){
+      document.getElementById("dealerCard3").style.color="red";
+    }else if(dealerHand[2].suit === "Clubs") {
+      document.getElementById("dealerCard3").style.color="black";
+    }else if(dealerHand[2].suit === "Spades") {
+      document.getElementById("dealerCard3").style.color="black";
+    }else if(dealerHand[2].suit === "Diamonds"){
+      document.getElementById("dealerCard3").style.color="red";
+    };
+    deck.shift();
+    checkDealerValue();
+    checkDealerTotal();
+  }else if(dealerTotal < 13) {
+     dealerHand.push(deck[0]);
+     checkDealerValue();
+     checkDealerTotal();
+
+    $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard3"></div>');
+    $('#dealerCard3').html(dealerHand[2].rank + dealerHand[2].symbol);
+     if (dealerHand[2].suit === "Hearts"){
+    document.getElementById("dealerCard3").style.color="red";
+    }else if(dealerHand[2].suit === "Clubs") {
+    document.getElementById("dealerCard3").style.color="black";
+    }else if(dealerHand[2].suit === "Spades") {
+    document.getElementById("dealerCard3").style.color="black";
+    }else if(dealerHand[2].suit === "Diamonds"){
+    document.getElementById("dealerCard3").style.color="red";
+    };
+
+    deck.shift();
 
 
+} else if (dealerTotal > playerTotal) {
+  console.log('Dealer holds');
+}
 };
 
 
+
+var checkDealerValue = function() {
+  if (dealerHand.length === 2) {
+     dealerTotal = dealerHand[0].value + dealerHand[1].value;
+     return dealerTotal;
+} else if (dealerHand.length === 3) {
+    dealerTotal = dealerHand[0].value + dealerHand[1].value + dealerHand[2].value;
+    return dealerTotal;
+} else if (dealerHand.length === 4) {
+  dealerTotal = dealerHand[0].value + dealerHand[1].value + dealerHand[2].value + dealerHand[3].value;
+    return dealerTotal;
+} else {
+    return dealerTotal;
+}
+};
+
+
+var checkDealerTotal = function(){
+  if(dealerTotal > 21) {
+    console.log("Dealer busts. You win!");
+    $('#bankAmount').html("Bank total: $" + bank);
+    return dealerTotal;
+  }else if (dealerTotal === 21) {
+    alert('Dealer has blackjack. You lose!');
+
+    return dealerTotal;
+  }
+};
+
+var hold = function() {
+  var myVar = setTimeout(dealerHit(), 3000);
+};
 
 var playerHand = [];
 var dealerHand = [];
@@ -131,31 +309,31 @@ var checkPlayerValue = function() {
 } else if (playerHand.length === 3) {
     playerTotal = playerHand[0].value + playerHand[1].value + playerHand[2].value;
 
-} else if (playerHand.length == 4) {
+} else if (playerHand.length === 4) {
   playerTotal = playerHand[0].value + playerHand[1].value + playerHand[2].value + playerHand[3].value;
 
 }
-return playerTotal
+return playerTotal;
 };
 
-
-playerTotal;
 
 var checkPlayerTotal = function(){
   if(playerTotal > 21) {
     console.log("bust");
-    alert('Bust');
+    alert('Bust!');
+    bank = bank;
+    $('#bankAmount').html("Bank total: $" + bank);
     return playerTotal;
   }else if (playerTotal === 21) {
     console.log("blackjack");
-    alert('BlackJack!');
+    alert('Blackjack!');
     return playerTotal;
-  }else {playerTotal;
+  }else {
+    return playerTotal;
   }
 };
-var getDealerValue = function() {
-  dealerHand[0].value + dealerHand[1].value;
-}
+
+
 
 //var dealPlayer = function() {
   //for (var i = 0; i < 1; i++){
