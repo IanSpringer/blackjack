@@ -72,7 +72,7 @@ var noDeal = false;
 
 var deal = function(){
   $('#div6').append('<p class="animated fadeInUp" id="bankAmount"></p>');
-  $('#bankAmount').html("Bank total: $" + bank);
+  $('#bankAmount').html("$" + bank + " in the bank");
   playerHand.push(deck[0]);
   dealerHand.push(deck[1]);
   playerHand.push(deck[2]);
@@ -81,7 +81,7 @@ var deal = function(){
   $('#dealer').html('DEALER');
   $('#div4').append('<h2 class="animated fadeInUp" id="player"></h2>');
   $('#player').html('PLAYER');
-  $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard1"></div>');
+    $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard1"></div>');
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard2"></div>');
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard1"></div>');
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard2"></div>');
@@ -93,7 +93,7 @@ var deal = function(){
   $('#div5').append('<div class="animated fadeInUp" id="bet" onclick="bet()"></div>');
   $('#div5').append('<div class="animated fadeInUp" id="hit" onclick="hit()"></div>');
   $('#div5').append('<div class="animated fadeInUp" id="hold" onclick="hold()"></div>');
-  $('#hold').html('Hold');
+  $('#hold').html('Stand');
   $('#bet').html('Bet');
   $('#hit').html('Hit');
   deck.shift();
@@ -191,24 +191,28 @@ var hit = function(){
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard4"></div>');
   $('#playerCard4').html(deck[0].rank + deck[0].symbol);
   playerHand.push(deck[0]);
-  if (playerHand[3].suit === "Hearts"){
-    document.getElementById("playerCard3").style.color="red";
-  };
-  if(playerHand[3].suit === "Clubs") {
-    document.getElementById("playerCard3").style.color="black"
-  }
-  if(playerHand[3].suit === "Spades") {
-    document.getElementById("playerCard3").style.color="black"
-  }
 
-  if(playerHand[3].suit === "Diamonds"){
-    document.getElementById("playerCard3").style.color="red";
-  };
+   if (playerHand[3].suit === "Hearts"){
+    document.getElementById("playerCard4").style.color="red";
+    };
+    if(playerHand[3].suit === "Clubs") {
+    document.getElementById("playerCard4").style.color="black";
+    }
+    if(playerHand[3].suit === "Spades") {
+    document.getElementById("playerCard4").style.color="black";
+    }
+    if(playerHand[3].suit === "Diamonds"){
+    document.getElementById("playerCard4").style.color="red";
+  }
+else if (playerHand.length === 4)
+console.log('hello world');
+
+};
   checkPlayerValue();
   checkPlayerTotal();
   deck.shift();
   return deck;
-}
+
 };
 
 deck;
@@ -282,7 +286,7 @@ var checkDealerValue = function() {
 
 var checkDealerTotal = function(){
   if(dealerTotal > 21) {
-    console.log("Dealer busts. You win!");
+    alert("Dealer busts. You win!");
     $('#bankAmount').html("Bank total: $" + bank);
     return dealerTotal;
   }else if (dealerTotal === 21) {

@@ -164,7 +164,7 @@ body {
 
 .div5 {
   height: 100px;
-  width: 370px;
+  width: 400px;
   margin: auto;
 }
 
@@ -259,7 +259,7 @@ body {
   color: white;
   font-family: 'Poiret One', cursive;
   font-size: 40px;
-  width: 90px;
+  width: 120px;
   text-align: center;
   border: 1px solid blue;
   border-radius: 10px;
@@ -282,6 +282,24 @@ body {
   margin-top: 90px;
   display: inline-block;
   float: right;
+
+}
+
+playerCard5 {
+
+  width: 130px;
+  height: 200px;
+  font-size: 40px;
+  text-align: center;
+  background: white;
+  border: 1px solid black;
+
+  margin-right: 20px;
+  margin-top: 90px;
+  display: inline-block;
+  float: right;
+
+
 
 }
 
