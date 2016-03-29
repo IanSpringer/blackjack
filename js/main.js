@@ -1,11 +1,9 @@
-
-
 // Card Constructor
 var Card = function(suit, rank, value, symbol) {
-    this.suit = suit;
-    this.rank = rank;
-    this.value = value;
-    this.symbol = symbol;
+  this.suit = suit;
+  this.rank = rank;
+  this.value = value;
+  this.symbol = symbol;
 };
 var cardDeck = {
   suit: ['Hearts', 'Spades', 'Diamonds', 'Clubs'],
@@ -15,21 +13,21 @@ var cardDeck = {
 };
 var deck = [];
 var makeDeck = function() {
-  for (var i = 0; i < cardDeck.rank.length; i++){
-    for (var j = 0; j < cardDeck.suit.length; j++){
+  for (var i = 0; i < cardDeck.rank.length; i++) {
+    for (var j = 0; j < cardDeck.suit.length; j++) {
       var card = new Card(cardDeck.suit[j], cardDeck.rank[i], cardDeck.value[i], cardDeck.symbol[j]);
       deck.push(card);
     }
   }
 };
 var shuffleDeck = function(array) {
-    var j, x, i;
-    for (i = array.length; i; i -= 1) {
-        j = Math.floor(Math.random() * i);
-        x = array[i - 1];
-        array[i - 1] = array[j];
-        array[j] = x;
-    }
+  var j, x, i;
+  for (i = array.length; i; i -= 1) {
+    j = Math.floor(Math.random() * i);
+    x = array[i - 1];
+    array[i - 1] = array[j];
+    array[j] = x;
+  }
 };
 
 $('#rulesButton').on('click', function() {
@@ -38,12 +36,12 @@ $('#rulesButton').on('click', function() {
 var bank = 5000;
 
 var playerPlaying = false;
-var getBet = function(){
+var getBet = function() {
   var amount = window.prompt('Your bank total is $' + bank + '. Minimum bet is $200. How much would you like to wager?');
   return amount;
 };
 
-$('#startButton').on('click', function(){
+$('#startButton').on('click', function() {
   var bet1 = getBet();
   playerPlaying = true;
   $('#startButton').html("");
@@ -56,21 +54,14 @@ $('#startButton').on('click', function(){
   shuffleDeck(deck);
 });
 
-
-
-var playerTotal;
-var dealerTotal;
-
-var noDeal = false;
-
-
+var play = false
 
 
 // card ingredients
 
 //Creates a fresh deck in order
 
-var deal = function(){
+var deal = function() {
   $('#div6').append('<p class="animated fadeInUp" id="bankAmount"></p>');
   $('#bankAmount').html("$" + bank + " in the bank");
   playerHand.push(deck[0]);
@@ -81,7 +72,7 @@ var deal = function(){
   $('#dealer').html('DEALER');
   $('#div4').append('<h2 class="animated fadeInUp" id="player"></h2>');
   $('#player').html('PLAYER');
-    $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard1"></div>');
+  $('#jumbotron').append('<div class="animated fadeInDownBig" class="cardFlip" id="dealerCard1"></div>');
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard2"></div>');
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard1"></div>');
   $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard2"></div>');
@@ -101,203 +92,316 @@ var deal = function(){
   deck.shift();
   deck.shift();
   checkPlayerValue();
-  checkPlayerTotal();
   checkDealerValue();
-  if (playerHand[0].suit === "Hearts"){
-    document.getElementById("playerCard1").style.color="red";
+  playerBlackJack();
+  if (playerHand[0].suit === "Hearts") {
+    document.getElementById("playerCard1").style.color = "red";
   }
-  if(playerHand[0].suit === "Clubs") {
-    document.getElementById("playerCard1").style.color="black";
+  if (playerHand[0].suit === "Clubs") {
+    document.getElementById("playerCard1").style.color = "black";
   }
-  if(playerHand[0].suit === "Spades") {
-    document.getElementById("playerCard1").style.color="black";
-  }
-
-  if(playerHand[0].suit === "Diamonds"){
-    document.getElementById("playerCard1").style.color="red";
-  };
-  if (playerHand[1].suit === "Hearts"){
-    document.getElementById("playerCard2").style.color="red";
-  };
-  if(playerHand[1].suit === "Clubs") {
-    document.getElementById("playerCard2").style.color="black";
-  }
-  if(playerHand[1].suit === "Spades") {
-    document.getElementById("playerCard2").style.color="black"
+  if (playerHand[0].suit === "Spades") {
+    document.getElementById("playerCard1").style.color = "black";
   }
 
-  if(playerHand[1].suit === "Diamonds"){
-    document.getElementById("playerCard2").style.color="red";
- }
- if (dealerHand[0].suit === "Hearts"){
-    document.getElementById("dealerCard1").style.color="red";
+  if (playerHand[0].suit === "Diamonds") {
+    document.getElementById("playerCard1").style.color = "red";
   };
-  if(dealerHand[0].suit === "Clubs") {
-    document.getElementById("dealerCard1").style.color="black"
+  if (playerHand[1].suit === "Hearts") {
+    document.getElementById("playerCard2").style.color = "red";
+  };
+  if (playerHand[1].suit === "Clubs") {
+    document.getElementById("playerCard2").style.color = "black";
   }
-  if(dealerHand[0].suit === "Spades") {
-    document.getElementById("dealerCard1").style.color="black"
+  if (playerHand[1].suit === "Spades") {
+    document.getElementById("playerCard2").style.color = "black"
   }
 
-  if(dealerHand[0].suit === "Diamonds"){
-    document.getElementById("dealerCard1").style.color="red";
-}
-if (dealerHand[1].suit === "Hearts"){
-    document.getElementById("dealerCard2").style.color="red";
-  };
-  if(dealerHand[1].suit === "Clubs") {
-    document.getElementById("dealerCard2").style.color="black"
+  if (playerHand[1].suit === "Diamonds") {
+    document.getElementById("playerCard2").style.color = "red";
   }
-  if(dealerHand[1].suit === "Spades") {
-    document.getElementById("dealerCard2").style.color="black"
+  if (dealerHand[0].suit === "Hearts") {
+    document.getElementById("dealerCard1").style.color = "red";
+  };
+  if (dealerHand[0].suit === "Clubs") {
+    document.getElementById("dealerCard1").style.color = "black"
+  }
+  if (dealerHand[0].suit === "Spades") {
+    document.getElementById("dealerCard1").style.color = "black"
   }
 
-  if(dealerHand[1].suit === "Diamonds"){
-    document.getElementById("dealerCard2").style.color="red";
+  if (dealerHand[0].suit === "Diamonds") {
+    document.getElementById("dealerCard1").style.color = "red";
+  }
+  if (dealerHand[1].suit === "Hearts") {
+    document.getElementById("dealerCard2").style.color = "red";
+  };
+  if (dealerHand[1].suit === "Clubs") {
+    document.getElementById("dealerCard2").style.color = "black"
+  }
+  if (dealerHand[1].suit === "Spades") {
+    document.getElementById("dealerCard2").style.color = "black"
+  }
+
+  if (dealerHand[1].suit === "Diamonds") {
+    document.getElementById("dealerCard2").style.color = "red";
   };
 
   $('#div1').html("");
 }
+
+
 var bet = function() {
   var amount = window.prompt('How much would you like to wager?');
   return amount
 }
 
-var hit = function(){
+var hit = function() {
   console.log('button works');
-  if(playerHand.length === 2) {
-  $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard3"></div>');
-  $('#playerCard3').html(deck[0].rank + deck[0].symbol);
-  playerHand.push(deck[0]);
-    if (playerHand[2].suit === "Hearts"){
-    document.getElementById("playerCard3").style.color="red";
+  if (playerHand.length === 2) {
+    $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard3"></div>');
+    $('#playerCard3').html(deck[0].rank + deck[0].symbol);
+    playerHand.push(deck[0]);
+    if (playerHand[2].suit === "Hearts") {
+      document.getElementById("playerCard3").style.color = "red";
     };
-    if(playerHand[2].suit === "Clubs") {
-    document.getElementById("playerCard3").style.color="black";
+    if (playerHand[2].suit === "Clubs") {
+      document.getElementById("playerCard3").style.color = "black";
     }
-    if(playerHand[2].suit === "Spades") {
-    document.getElementById("playerCard3").style.color="black";
+    if (playerHand[2].suit === "Spades") {
+      document.getElementById("playerCard3").style.color = "black";
     }
-    if(playerHand[2].suit === "Diamonds"){
-    document.getElementById("playerCard3").style.color="red";
+    if (playerHand[2].suit === "Diamonds") {
+      document.getElementById("playerCard3").style.color = "red";
     };
-  checkPlayerValue();
-  checkPlayerTotal();
-  deck.shift();
-  return deck;
-  return playerTotal;
+    checkPlayerValue();
+    playerBusts();
+    playerBlackJack();
+    deck.shift();
+    return deck;
+    return playerTotal;
 
-}else if (playerHand.length === 3) {
-  $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard4"></div>');
-  $('#playerCard4').html(deck[0].rank + deck[0].symbol);
-  playerHand.push(deck[0]);
+  } else if (playerHand.length === 3) {
+    $('#jumbotron').append('<div class="animated fadeInDownBig" id="playerCard4"></div>');
+    $('#playerCard4').html(deck[0].rank + deck[0].symbol);
+    playerHand.push(deck[0]);
 
-   if (playerHand[3].suit === "Hearts"){
-    document.getElementById("playerCard4").style.color="red";
+    if (playerHand[3].suit === "Hearts") {
+      document.getElementById("playerCard4").style.color = "red";
     };
-    if(playerHand[3].suit === "Clubs") {
-    document.getElementById("playerCard4").style.color="black";
+    if (playerHand[3].suit === "Clubs") {
+      document.getElementById("playerCard4").style.color = "black";
     }
-    if(playerHand[3].suit === "Spades") {
-    document.getElementById("playerCard4").style.color="black";
+    if (playerHand[3].suit === "Spades") {
+      document.getElementById("playerCard4").style.color = "black";
     }
-    if(playerHand[3].suit === "Diamonds"){
-    document.getElementById("playerCard4").style.color="red";
+    if (playerHand[3].suit === "Diamonds") {
+      document.getElementById("playerCard4").style.color = "red";
+    }
+    checkPlayerValue();
+    playerBusts();
+    playerBlackJack();
+    deck.shift();
+    return deck;
+    return playerTotal;
+
   }
-else if (playerHand.length === 4)
-console.log('hello world');
-
-};
-  checkPlayerValue();
-  checkPlayerTotal();
-  deck.shift();
-  return deck;
-
 };
 
 deck;
 
-var dealerHit = function(){
-  console.log('working')
-   $('#dealerCard1').attr('id', 'flipCard');
-   $('#flipCard').html(dealerHand[0].rank + dealerHand[0].symbol);
-   checkDealerValue();
-   checkDealerTotal();
-   checkPlayerTotal();
+//CALLBACKS!!!!
 
-  if(dealerTotal < playerTotal) {
-    dealerHand.push(deck[0]);
-    $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard3"></div>');
-    $('#dealerCard3').html(dealerHand[2].rank + dealerHand[2].symbol);
-    if (dealerHand[2].suit === "Hearts"){
-      document.getElementById("dealerCard3").style.color="red";
-    }else if(dealerHand[2].suit === "Clubs") {
-      document.getElementById("dealerCard3").style.color="black";
-    }else if(dealerHand[2].suit === "Spades") {
-      document.getElementById("dealerCard3").style.color="black";
-    }else if(dealerHand[2].suit === "Diamonds"){
-      document.getElementById("dealerCard3").style.color="red";
-    };
+
+
+var myVar;
+var alertFunc = function() {
+  alert("Dealer wins")
+}
+
+var myVar2;
+var alertFunc2 = function() {
+  alert("Dealer busts, you win!")
+}
+
+var myVar3;
+var alertFunc3 = function() {
+  alert("Dealer has blackjack, you lose")
+}
+
+var myVar4;
+var alertFunc4 = function() {
+  alert("Blackjack!")
+}
+
+var myVar5;
+var alertFunc5 = function() {
+  alert("Bust");
+}
+
+var dealerWins = function() {
+  if ((dealerTotal > playerTotal) && (dealerTotal <= 21)) {
+    myVar = setTimeout(alertFunc(), 5000)
+  }
+}
+
+var dealerBusts = function() {
+  if (dealerTotal > 21) {
+    myVar2 = setTimeout(alertFunc2(), 5000)
+  }
+};
+
+var dealerBlackJack = function() {
+  if (dealerTotal === 21) {
+    myVar3 = setTimeout(alertFunc3(), 5000)
+  }
+}
+
+var playerBlackJack = function() {
+  if (playerTotal === 21) {
+    myVar4 = setTimeout(alertFunc4(), 5000)
+  }
+}
+
+var playerBusts = function() {
+  if (playerTotal > 21) {
+    myVar5 = setTimeout(alertFunc5(), 5000)
+
+  }
+}
+
+
+var dealerHit = function() {
+  console.log('working')
+  $('#dealerCard1').attr('id', 'flipCard');
+  $('#flipCard').html(dealerHand[0].rank + dealerHand[0].symbol);
+  checkDealerValue();
+  checkPlayerValue();
+  if (dealerHand.length === 2) {
+    if (dealerTotal < playerTotal) {
+      dealerHand.push(deck[0]);
+      $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard3"></div>');
+      $('#dealerCard3').html(dealerHand[2].rank + dealerHand[2].symbol);
+      if (dealerHand[2].suit === "Hearts") {
+        document.getElementById("dealerCard3").style.color = "red";
+      } else if (dealerHand[2].suit === "Clubs") {
+        document.getElementById("dealerCard3").style.color = "black";
+      } else if (dealerHand[2].suit === "Spades") {
+        document.getElementById("dealerCard3").style.color = "black";
+      } else if (dealerHand[2].suit === "Diamonds") {
+        document.getElementById("dealerCard3").style.color = "red";
+      } else {
+
+      }
+    }
     deck.shift();
     checkDealerValue();
-    checkDealerTotal();
-  }else if(dealerTotal < 13) {
-     dealerHand.push(deck[0]);
-     checkDealerValue();
-     checkDealerTotal();
-
+    dealerBusts()
+    dealerWins();
+    dealerBlackJack()
+  } else if (dealerTotal < 13) {
+    dealerHand.push(deck[0]);
+    checkDealerValue();
     $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard3"></div>');
     $('#dealerCard3').html(dealerHand[2].rank + dealerHand[2].symbol);
-     if (dealerHand[2].suit === "Hearts"){
-    document.getElementById("dealerCard3").style.color="red";
-    }else if(dealerHand[2].suit === "Clubs") {
-    document.getElementById("dealerCard3").style.color="black";
-    }else if(dealerHand[2].suit === "Spades") {
-    document.getElementById("dealerCard3").style.color="black";
-    }else if(dealerHand[2].suit === "Diamonds"){
-    document.getElementById("dealerCard3").style.color="red";
-    };
-
+    if (dealerHand[2].suit === "Hearts") {
+      document.getElementById("dealerCard3").style.color = "red";
+    } else if (dealerHand[2].suit === "Clubs") {
+      document.getElementById("dealerCard3").style.color = "black";
+    } else if (dealerHand[2].suit === "Spades") {
+      document.getElementById("dealerCard3").style.color = "black";
+    } else if (dealerHand[2].suit === "Diamonds") {
+      document.getElementById("dealerCard3").style.color = "red";
+    } else {};
+    dealerWins();
+    dealerBusts();
+    dealerBlackJack();
     deck.shift();
-
-
-} else if (dealerTotal > playerTotal) {
-  console.log('Dealer holds');
+    dealerHitsAgain();
+  }
 }
-};
+
+var dealerHitsAgain = function() {
+  if (dealerHand.length === 3)
+    if (dealerTotal < playerTotal) {
+      dealerHand.push(deck[0]);
+      $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard4"></div>');
+      $('#dealerCard4').html(dealerHand[3].rank + dealerHand[3].symbol);
+      if (dealerHand[3].suit === "Hearts") {
+        document.getElementById("dealerCard4").style.color = "red";
+      } else if (dealerHand[3].suit === "Clubs") {
+        document.getElementById("dealerCard4").style.color = "black";
+      } else if (dealerHand[3].suit === "Spades") {
+        document.getElementById("dealerCard4").style.color = "black";
+      } else if (dealerHand[3].suit === "Diamonds") {
+        document.getElementById("dealerCard4").style.color = "red";
+      }
+      deck.shift();
+      checkDealerValue();
+      dealerWins();
+      dealerBusts();
+      dealerBlackJack();
+    } else if (dealerTotal < 17) {
+    dealerHand.push(deck[0]);
+    checkDealerValue();
+
+
+    $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard4"></div>');
+    $('#dealerCard3').html(dealerHand[3].rank + dealerHand[3].symbol);
+    if (dealerHand[3].suit === "Hearts") {
+      document.getElementById("dealerCard3").style.color = "red";
+    } else if (dealerHand[3].suit === "Clubs") {
+      document.getElementById("dealerCard3").style.color = "black";
+    } else if (dealerHand[3].suit === "Spades") {
+      document.getElementById("dealerCard3").style.color = "black";
+    } else if (dealerHand[3].suit === "Diamonds") {
+      document.getElementById("dealerCard3").style.color = "red";
+    }
+    dealerWins();
+    dealerBusts();
+    dealerBlackJack();
+    deck.shift();
+  }
+}
+
+// } else if (dealerTotal > playerTotal) {
+//   console.log('Dealer wins');
+//   dealerWins();
 
 
 
 var checkDealerValue = function() {
   if (dealerHand.length === 2) {
-     dealerTotal = dealerHand[0].value + dealerHand[1].value;
-     return dealerTotal;
-} else if (dealerHand.length === 3) {
+    dealerTotal = dealerHand[0].value + dealerHand[1].value;
+    return dealerTotal;
+  } else if (dealerHand.length === 3) {
     dealerTotal = dealerHand[0].value + dealerHand[1].value + dealerHand[2].value;
     return dealerTotal;
-} else if (dealerHand.length === 4) {
-  dealerTotal = dealerHand[0].value + dealerHand[1].value + dealerHand[2].value + dealerHand[3].value;
+  } else if (dealerHand.length === 4) {
+    dealerTotal = dealerHand[0].value + dealerHand[1].value + dealerHand[2].value + dealerHand[3].value;
     return dealerTotal;
-} else {
-    return dealerTotal;
-}
-};
-
-
-var checkDealerTotal = function(){
-  if(dealerTotal > 21) {
-    alert("Dealer busts. You win!");
-    $('#bankAmount').html("Bank total: $" + bank);
-    return dealerTotal;
-  }else if (dealerTotal === 21) {
-    alert('Dealer has blackjack. You lose!');
-
+  } else {
     return dealerTotal;
   }
 };
 
+
+// var checkDealerTotal = function(){
+//   if(dealerTotal > 21) {
+//     alert("Dealer busts. You win!");
+//     $('#bankAmount').html("$" + bank + " in the bank");
+//     return dealerTotal;
+//   }else if (dealerTotal === 21) {
+//     alert('Dealer has blackjack. You lose!');
+
+//     return dealerTotal;
+//   }
+
+
+
 var hold = function() {
   var myVar = setTimeout(dealerHit(), 3000);
+  var myVar1 = setTimeout(dealerWins(), 6000);
 };
 
 var playerHand = [];
@@ -308,41 +412,16 @@ var dealerTotal;
 
 var checkPlayerValue = function() {
   if (playerHand.length === 2) {
-     playerTotal = playerHand[0].value + playerHand[1].value;
+    playerTotal = playerHand[0].value + playerHand[1].value;
 
-} else if (playerHand.length === 3) {
+  } else if (playerHand.length === 3) {
     playerTotal = playerHand[0].value + playerHand[1].value + playerHand[2].value;
 
-} else if (playerHand.length === 4) {
-  playerTotal = playerHand[0].value + playerHand[1].value + playerHand[2].value + playerHand[3].value;
+  } else if (playerHand.length === 4) {
+    playerTotal = playerHand[0].value + playerHand[1].value + playerHand[2].value + playerHand[3].value;
 
-}
-return playerTotal;
-};
-
-
-var checkPlayerTotal = function(){
-  if(playerTotal > 21) {
-    console.log("bust");
-    alert('Bust!');
-    bank = bank;
-    $('#bankAmount').html("Bank total: $" + bank);
-    return playerTotal;
-  }else if (playerTotal === 21) {
-    console.log("blackjack");
-    alert('Blackjack!');
-    return playerTotal;
-  }else {
-    return playerTotal;
+  } else {
+    console.log("hello")
   }
+  return playerTotal;
 };
-
-
-
-//var dealPlayer = function() {
-  //for (var i = 0; i < 1; i++){
-    //playerHand.push(deck[i])
-  //}
-//}
-
-
