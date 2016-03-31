@@ -35,15 +35,17 @@ $('#rulesButton').on('click', function() {
 });
 var bank = 5000;
 
-var playerPlaying = false;
 var getBet = function() {
   var amount = window.prompt('Your bank total is $' + bank + '. Minimum bet is $200. How much would you like to wager?');
   return amount;
 };
 
+
 $('#startButton').on('click', function() {
   var bet1 = getBet();
-  playerPlaying = true;
+
+
+
   $('#startButton').html("");
   $('#rulesButton').html("");
   $('#jumbotron').html("");
@@ -54,7 +56,26 @@ $('#startButton').on('click', function() {
   shuffleDeck(deck);
 });
 
-var play = false
+var playAgain = function(){
+  getBet();
+  $('#dealer').remove()
+  $('#player').remove()
+  $('#dealerCard1').remove()
+  $('#dealerCard2').remove()
+  $('#dealerCard3').remove()
+  $('#dealerCard4').remove()
+  $('#playerCard1').remove();
+  $('#playerCard2').remove();
+  $('#playerCard3').remove();
+  $('#playerCard4').remove();
+  $('#bet').remove();
+  $('#hold').remove()
+  $('#hit').remove();
+
+
+
+
+}
 
 
 // card ingredients
@@ -174,6 +195,10 @@ var hit = function() {
     if (playerHand[2].suit === "Diamonds") {
       document.getElementById("playerCard3").style.color = "red";
     };
+  aceChange(0);
+  aceChange(1);
+  aceChange(2);
+
     checkPlayerValue();
     playerBusts();
     playerBlackJack();
@@ -202,9 +227,13 @@ var hit = function() {
     playerBusts();
     playerBlackJack();
     deck.shift();
+
+    aceChange(0);
+    aceChange(1);
+    aceChange(2);
+    aceChange(3);
     return deck;
     return playerTotal;
-
   }
 };
 
@@ -216,56 +245,70 @@ deck;
 
 var myVar;
 var alertFunc = function() {
-  alert("Dealer wins")
-}
+  alert("Dealer wins. Play again?");
+  playAgain()
+};
 
 var myVar2;
 var alertFunc2 = function() {
-  alert("Dealer busts, you win!")
-}
+  alert("Dealer busts, you win! Play again?");
+  playAgain()
+  makeDeck();
+  shuffleDeck(deck);
+};
 
 var myVar3;
 var alertFunc3 = function() {
-  alert("Dealer has blackjack, you lose")
-}
+  alert("Dealer has blackjack, you lose. Play again?")
+  playAgain()
+  makeDeck();
+  shuffleDeck(deck);
+};
 
 var myVar4;
 var alertFunc4 = function() {
-  alert("Blackjack!")
-}
+  alert("Blackjack! Play Again?")
+  playAgain();
+  makeDeck();
+  shuffleDeck(deck);
+};
 
 var myVar5;
 var alertFunc5 = function() {
-  alert("Bust");
+ alert("Bust. Play again?")
+  playAgain()
+  makeDeck();
+  shuffleDeck(deck);
 }
 
 var dealerWins = function() {
-  if ((dealerTotal > playerTotal) && (dealerTotal <= 21)) {
-    myVar = setTimeout(alertFunc(), 5000)
+  if ((dealerTotal > playerTotal) && (dealerTotal < 21)) {
+    myVar = setTimeout(alertFunc, 1500);
   }
 }
 
 var dealerBusts = function() {
   if (dealerTotal > 21) {
-    myVar2 = setTimeout(alertFunc2(), 5000)
+    myVar2 = setTimeout(alertFunc2, 1500)
   }
 };
 
 var dealerBlackJack = function() {
   if (dealerTotal === 21) {
-    myVar3 = setTimeout(alertFunc3(), 5000)
+    myVar3 = setTimeout(alertFunc3, 1500)
+    bank = (bank (bet1 - bet2))
   }
 }
 
 var playerBlackJack = function() {
   if (playerTotal === 21) {
-    myVar4 = setTimeout(alertFunc4(), 5000)
+    myVar4 = setTimeout(alertFunc4, 1500)
   }
 }
 
 var playerBusts = function() {
   if (playerTotal > 21) {
-    myVar5 = setTimeout(alertFunc5(), 5000)
+    myVar5 = setTimeout(alertFunc5, 1500)
 
   }
 }
@@ -296,9 +339,13 @@ var dealerHit = function() {
     }
     deck.shift();
     checkDealerValue();
+    dealerAceChange(0);
+    dealerAceChange(1);
+    dealerAceChange(2);
     dealerBusts()
     dealerWins();
-    dealerBlackJack()
+    dealerBlackJack();
+
   } else if (dealerTotal < 13) {
     dealerHand.push(deck[0]);
     checkDealerValue();
@@ -316,8 +363,12 @@ var dealerHit = function() {
     dealerWins();
     dealerBusts();
     dealerBlackJack();
+    dealerAceChange(0);
+    dealerAceChange(1);
+    dealerAceChange(2);
     deck.shift();
     dealerHitsAgain();
+
   }
 }
 
@@ -341,23 +392,26 @@ var dealerHitsAgain = function() {
       dealerWins();
       dealerBusts();
       dealerBlackJack();
+      dealerAceChange(3)
     } else if (dealerTotal < 17) {
     dealerHand.push(deck[0]);
     checkDealerValue();
+    dealerAceChange();
 
 
     $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard4"></div>');
-    $('#dealerCard3').html(dealerHand[3].rank + dealerHand[3].symbol);
+    $('#dealerCard4').html(dealerHand[3].rank + dealerHand[3].symbol);
     if (dealerHand[3].suit === "Hearts") {
-      document.getElementById("dealerCard3").style.color = "red";
+      document.getElementById("dealerCard4").style.color = "red";
     } else if (dealerHand[3].suit === "Clubs") {
-      document.getElementById("dealerCard3").style.color = "black";
+      document.getElementById("dealerCard4").style.color = "black";
     } else if (dealerHand[3].suit === "Spades") {
-      document.getElementById("dealerCard3").style.color = "black";
+      document.getElementById("dealerCard4").style.color = "black";
     } else if (dealerHand[3].suit === "Diamonds") {
-      document.getElementById("dealerCard3").style.color = "red";
+      document.getElementById("dealerCard4").style.color = "red";
     }
     dealerWins();
+    dealerAceChange(3);
     dealerBusts();
     dealerBlackJack();
     deck.shift();
@@ -401,7 +455,7 @@ var checkDealerValue = function() {
 
 var hold = function() {
   var myVar = setTimeout(dealerHit(), 3000);
-  var myVar1 = setTimeout(dealerWins(), 6000);
+  //var myVar1 = setTimeout(dealerWins(), 6000);
 };
 
 var playerHand = [];
@@ -425,3 +479,35 @@ var checkPlayerValue = function() {
   }
   return playerTotal;
 };
+
+var aceChange = function(num) {
+  checkPlayerValue();
+  playerTotal;
+  if(playerTotal > 21) {
+    if (playerHand[num].rank === "A")
+      playerHand[num].value = 1;
+      console.log(playerHand)
+    }
+
+ }
+
+ var dealerAceChange = function(num) {
+  checkDealerValue();
+  dealerTotal;
+  if(dealerTotal > 21) {
+    if (dealerHand[num].rank === "A") {
+      dealerHand[num].value = 1;
+      console.log(dealerHand)
+    }
+
+}
+ }
+
+
+
+
+
+
+
+
+
