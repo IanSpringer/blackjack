@@ -57,10 +57,13 @@ $('#startButton').on('click', function() {
 });
 
 var playAgain = function(){
+  playerHand = [];
+  dealerHand = [];
   getBet();
   $('#dealer').remove()
   $('#player').remove()
-  $('#dealerCard1').remove()
+  $('#flipCard').remove()
+  $('#dealerCard1').remove();
   $('#dealerCard2').remove()
   $('#dealerCard3').remove()
   $('#dealerCard4').remove()
@@ -72,6 +75,8 @@ var playAgain = function(){
   $('#hold').remove()
   $('#hit').remove();
 
+  playerTotal = 0;
+  dealerTotal = 0;
 
 
 
@@ -83,7 +88,6 @@ var playAgain = function(){
 //Creates a fresh deck in order
 
 var deal = function() {
-  return bank;
   $('#div6').append('<p class="animated fadeInUp" id="bankAmount"></p>');
   $('#bankAmount').html("$" + bank + " in the bank");
   playerHand.push(deck[0]);
@@ -310,7 +314,7 @@ var myVar4;
 var alertFunc4 = function() {
   alert("Blackjack! Play Again?")
   playAgain();
-  winBig();
+  bigWin();
   makeDeck();
   shuffleDeck(deck);
 };
@@ -417,6 +421,9 @@ var dealerHit = function() {
 
 var dealerHitsAgain = function() {
   if (dealerHand.length === 3)
+     checkDealerValue();
+     checkPlayerValue();
+
     if (dealerTotal < playerTotal) {
       dealerHand.push(deck[0]);
       $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard4"></div>');
