@@ -35,9 +35,9 @@ $('#rulesButton').on('click', function() {
 });
 var bank = 5000;
 
+var amount;
 var getBet = function() {
-  var amount = window.prompt('Your bank total is $' + bank + '. Minimum bet is $200. How much would you like to wager?');
-  return amount;
+  amount = window.prompt('Your bank total is $' + bank + '. Minimum bet is $200. How much would you like to wager?');
 };
 
 
@@ -83,6 +83,7 @@ var playAgain = function(){
 //Creates a fresh deck in order
 
 var deal = function() {
+  return bank;
   $('#div6').append('<p class="animated fadeInUp" id="bankAmount"></p>');
   $('#bankAmount').html("$" + bank + " in the bank");
   playerHand.push(deck[0]);
@@ -115,6 +116,7 @@ var deal = function() {
   checkPlayerValue();
   checkDealerValue();
   playerBlackJack();
+  twoAces();
   if (playerHand[0].suit === "Hearts") {
     document.getElementById("playerCard1").style.color = "red";
   }
@@ -127,10 +129,10 @@ var deal = function() {
 
   if (playerHand[0].suit === "Diamonds") {
     document.getElementById("playerCard1").style.color = "red";
-  };
+  }
   if (playerHand[1].suit === "Hearts") {
     document.getElementById("playerCard2").style.color = "red";
-  };
+  }
   if (playerHand[1].suit === "Clubs") {
     document.getElementById("playerCard2").style.color = "black";
   }
@@ -143,12 +145,12 @@ var deal = function() {
   }
   if (dealerHand[0].suit === "Hearts") {
     document.getElementById("dealerCard1").style.color = "red";
-  };
+  }
   if (dealerHand[0].suit === "Clubs") {
-    document.getElementById("dealerCard1").style.color = "black"
+    document.getElementById("dealerCard1").style.color = "black";
   }
   if (dealerHand[0].suit === "Spades") {
-    document.getElementById("dealerCard1").style.color = "black"
+    document.getElementById("dealerCard1").style.color = "black";
   }
 
   if (dealerHand[0].suit === "Diamonds") {
@@ -156,26 +158,27 @@ var deal = function() {
   }
   if (dealerHand[1].suit === "Hearts") {
     document.getElementById("dealerCard2").style.color = "red";
-  };
+  }
   if (dealerHand[1].suit === "Clubs") {
-    document.getElementById("dealerCard2").style.color = "black"
+    document.getElementById("dealerCard2").style.color = "black";
   }
   if (dealerHand[1].suit === "Spades") {
-    document.getElementById("dealerCard2").style.color = "black"
+    document.getElementById("dealerCard2").style.color = "black";
   }
 
   if (dealerHand[1].suit === "Diamonds") {
     document.getElementById("dealerCard2").style.color = "red";
-  };
+  }
 
   $('#div1').html("");
 }
-
-
+;
+var amount1;
 var bet = function() {
-  var amount = window.prompt('How much would you like to wager?');
-  return amount
-}
+  return bank;
+   amount1 = window.prompt('You have ' + bank + 'How much would you like to wager?');
+  return amount;
+};
 
 var hit = function() {
   console.log('button works');
@@ -185,7 +188,7 @@ var hit = function() {
     playerHand.push(deck[0]);
     if (playerHand[2].suit === "Hearts") {
       document.getElementById("playerCard3").style.color = "red";
-    };
+    }
     if (playerHand[2].suit === "Clubs") {
       document.getElementById("playerCard3").style.color = "black";
     }
@@ -194,7 +197,7 @@ var hit = function() {
     }
     if (playerHand[2].suit === "Diamonds") {
       document.getElementById("playerCard3").style.color = "red";
-    };
+    }
   aceChange(0);
   aceChange(1);
   aceChange(2);
@@ -213,7 +216,7 @@ var hit = function() {
 
     if (playerHand[3].suit === "Hearts") {
       document.getElementById("playerCard4").style.color = "red";
-    };
+    }
     if (playerHand[3].suit === "Clubs") {
       document.getElementById("playerCard4").style.color = "black";
     }
@@ -237,7 +240,42 @@ var hit = function() {
   }
 };
 
+var twoAces = function() {
+  if (playerHand[0].rank === "A" && playerHand[1].rank === "A"){
+    playerTotal = 12;
+    return playerTotal;
+  }
+};
+
+
 deck;
+
+
+var lose = function() {
+  bank = bank - amount - amount1;
+  return bank;
+};
+
+
+var bigWin = function(){
+  bank = bank + ((amount + amount1) * 1.5);
+  return bank;
+}
+
+var win = function (){
+  bank = bank + amount + amount1;
+  return bank;
+}
+
+var loseBig = function(){
+  bank = bank - ((amount + amount1) * 1.5);
+  return bank;
+}
+
+var tie = function() {
+  bank = bank;
+  return bank;
+}
 
 //CALLBACKS!!!!
 
@@ -247,12 +285,14 @@ var myVar;
 var alertFunc = function() {
   alert("Dealer wins. Play again?");
   playAgain()
+  lose();
 };
 
 var myVar2;
 var alertFunc2 = function() {
   alert("Dealer busts, you win! Play again?");
   playAgain()
+  win()
   makeDeck();
   shuffleDeck(deck);
 };
@@ -261,6 +301,7 @@ var myVar3;
 var alertFunc3 = function() {
   alert("Dealer has blackjack, you lose. Play again?")
   playAgain()
+  loseBig()
   makeDeck();
   shuffleDeck(deck);
 };
@@ -269,6 +310,7 @@ var myVar4;
 var alertFunc4 = function() {
   alert("Blackjack! Play Again?")
   playAgain();
+  winBig();
   makeDeck();
   shuffleDeck(deck);
 };
@@ -277,6 +319,7 @@ var myVar5;
 var alertFunc5 = function() {
  alert("Bust. Play again?")
   playAgain()
+  lose();
   makeDeck();
   shuffleDeck(deck);
 }
@@ -289,33 +332,33 @@ var dealerWins = function() {
 
 var dealerBusts = function() {
   if (dealerTotal > 21) {
-    myVar2 = setTimeout(alertFunc2, 1500)
+    myVar2 = setTimeout(alertFunc2, 1500);
   }
 };
 
 var dealerBlackJack = function() {
   if (dealerTotal === 21) {
-    myVar3 = setTimeout(alertFunc3, 1500)
-    bank = (bank (bet1 - bet2))
+    myVar3 = setTimeout(alertFunc3, 1500);
+    bank = (bank (bet1 - bet2));
   }
 }
 
 var playerBlackJack = function() {
   if (playerTotal === 21) {
-    myVar4 = setTimeout(alertFunc4, 1500)
+    myVar4 = setTimeout(alertFunc4, 1500);
   }
 }
 
 var playerBusts = function() {
   if (playerTotal > 21) {
-    myVar5 = setTimeout(alertFunc5, 1500)
+    myVar5 = setTimeout(alertFunc5, 1500);
 
   }
 }
 
 
 var dealerHit = function() {
-  console.log('working')
+  console.log('working');
   $('#dealerCard1').attr('id', 'flipCard');
   $('#flipCard').html(dealerHand[0].rank + dealerHand[0].symbol);
   checkDealerValue();
