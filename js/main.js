@@ -36,8 +36,14 @@ $('#rulesButton').on('click', function() {
 var bank = 5000;
 
 var amount;
+var a = 0;
+var b = 0;
 var getBet = function() {
   amount = window.prompt('Your bank total is $' + bank + '. Minimum bet is $200. How much would you like to wager?');
+  a = parseInt(amount);
+  totalBet = a;
+
+
 };
 
 
@@ -59,6 +65,8 @@ $('#startButton').on('click', function() {
 var playAgain = function(){
   playerHand = [];
   dealerHand = [];
+  a = 0;
+  b = 0;
   getBet();
   $('#dealer').remove()
   $('#player').remove()
@@ -71,10 +79,14 @@ var playAgain = function(){
   $('#playerCard2').remove();
   $('#playerCard3').remove();
   $('#playerCard4').remove();
+  $('#bankAmount').remove();
   $('#bet').remove();
   $('#hold').remove()
   $('#hit').remove();
 
+
+  makeDeck();
+  shuffleDeck(deck);
   playerTotal = 0;
   dealerTotal = 0;
 
@@ -88,6 +100,7 @@ var playAgain = function(){
 //Creates a fresh deck in order
 
 var deal = function() {
+
   $('#div6').append('<p class="animated fadeInUp" id="bankAmount"></p>');
   $('#bankAmount').html("$" + bank + " in the bank");
   playerHand.push(deck[0]);
@@ -178,10 +191,13 @@ var deal = function() {
 }
 ;
 var amount1;
+var totalBet = 0;
 var bet = function() {
-  return bank;
-   amount1 = window.prompt('You have ' + bank + 'How much would you like to wager?');
-  return amount;
+  amount1 = window.prompt('You have ' + bank + 'How much would you like to wager?');
+  b = parseInt(amount1);
+  totalBet = a + b;
+
+
 };
 
 var hit = function() {
@@ -256,24 +272,26 @@ deck;
 
 
 var lose = function() {
-  bank = bank - amount - amount1;
-  return bank;
+  bank = bank - totalBet;
+  return bank
+
 };
 
 
 var bigWin = function(){
-  bank = bank + ((amount + amount1) * 1.5);
-  return bank;
+  bank = bank + (totalBet * 1.5);
+  return bank
+
 }
 
 var win = function (){
-  bank = bank + amount + amount1;
-  return bank;
+  bank = bank + totalBet;
+  return bank
 }
 
 var loseBig = function(){
-  bank = bank - ((amount + amount1) * 1.5);
-  return bank;
+  bank = bank - (totalBet * 1.5);
+  return bank
 }
 
 var tie = function() {
@@ -288,44 +306,42 @@ var tie = function() {
 var myVar;
 var alertFunc = function() {
   alert("Dealer wins. Play again?");
-  playAgain()
   lose();
+  playAgain()
 };
 
 var myVar2;
 var alertFunc2 = function() {
   alert("Dealer busts, you win! Play again?");
-  playAgain()
   win()
-  makeDeck();
-  shuffleDeck(deck);
-};
+  playAgain()
+
+
+}
+
 
 var myVar3;
 var alertFunc3 = function() {
   alert("Dealer has blackjack, you lose. Play again?")
-  playAgain()
   loseBig()
-  makeDeck();
-  shuffleDeck(deck);
+  playAgain()
+
 };
 
 var myVar4;
 var alertFunc4 = function() {
   alert("Blackjack! Play Again?")
-  playAgain();
   bigWin();
-  makeDeck();
-  shuffleDeck(deck);
+  playAgain();
+
 };
 
 var myVar5;
 var alertFunc5 = function() {
  alert("Bust. Play again?")
-  playAgain()
   lose();
-  makeDeck();
-  shuffleDeck(deck);
+  playAgain()
+
 }
 
 var dealerWins = function() {
@@ -343,7 +359,7 @@ var dealerBusts = function() {
 var dealerBlackJack = function() {
   if (dealerTotal === 21) {
     myVar3 = setTimeout(alertFunc3, 1500);
-    bank = (bank (bet1 - bet2));
+
   }
 }
 
@@ -389,6 +405,7 @@ var dealerHit = function() {
     dealerAceChange(0);
     dealerAceChange(1);
     dealerAceChange(2);
+    dealerHitsAgain()
     dealerBusts()
     dealerWins();
     dealerBlackJack();
@@ -410,15 +427,19 @@ var dealerHit = function() {
     dealerWins();
     dealerBusts();
     dealerBlackJack();
+    dealerHitsAgain();
     dealerAceChange(0);
     dealerAceChange(1);
     dealerAceChange(2);
     deck.shift();
-    dealerHitsAgain();
 
-  }
+    c();
+  } else {
+    return deck;
+    return dealerHand;
 }
-
+}
+var c = setTimeout(dealerHitsAgain, 2000)
 var dealerHitsAgain = function() {
   if (dealerHand.length === 3)
      checkDealerValue();
@@ -440,15 +461,13 @@ var dealerHitsAgain = function() {
       deck.shift();
       checkDealerValue();
       dealerWins();
-      dealerBusts();
+
       dealerBlackJack();
       dealerAceChange(3)
     } else if (dealerTotal < 17) {
     dealerHand.push(deck[0]);
     checkDealerValue();
     dealerAceChange();
-
-
     $('#jumbotron').append('<div class="animated fadeInDownBig" id="dealerCard4"></div>');
     $('#dealerCard4').html(dealerHand[3].rank + dealerHand[3].symbol);
     if (dealerHand[3].suit === "Hearts") {
